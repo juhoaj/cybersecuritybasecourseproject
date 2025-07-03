@@ -210,4 +210,4 @@ __marimo__/
 .DS_Store
 
 # Project
-# secrets.json
+# secrets.json # fix 4.1.1 part 3: remove commenting from this line

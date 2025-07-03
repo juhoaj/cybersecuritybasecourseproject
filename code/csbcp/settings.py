@@ -8,21 +8,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECRET_KEY = 'django-insecure-$^daqj3ap6=53^o6@tb_sjkdx-z!1b%gs5*gso)-rbo)5u)1(t'
+SECRET_KEY = 'django-insecure-$^daqj3ap6=53^o6@tb_sjkdx-z!1b%gs5*gso)-rbo)5u)1(t' # fix 4.1.1 part 1: remove this line completely
 
-# start
+# fix 4.1.1 part 2: remove commenting below
+#
+# BASE_DIR = Path(__file__).resolve().parent.parent
+# with open(BASE_DIR / 'secrets.json') as f:
+#     secrets = json.load(f)
+# 
+# SECRET_KEY = secrets['SECRET_KEY']
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-with open(BASE_DIR / 'secrets.json') as f:
-    secrets = json.load(f)
+DEBUG = True #fix 4.2: Change True to False
 
-SECRET_KEY = secrets['SECRET_KEY']
-
-# end
-
-DEBUG = True #fix x.x Change True to False
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -34,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'csbcp'
 ]
 
 MIDDLEWARE = [
