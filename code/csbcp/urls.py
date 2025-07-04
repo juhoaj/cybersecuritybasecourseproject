@@ -19,6 +19,10 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+    path('', loginView, name='login'),
     path('signup/', signupView, name='signup'),
+    path('main/', mainView, name='main'),
+    path('sendmessage/', sendMessageView, name='sendmessage'),
+    path('admin/', adminView, name='admin'),
     path('obscureurlfordjangoadmin/', admin.site.urls),
 ]

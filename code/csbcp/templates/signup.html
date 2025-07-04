@@ -1,3 +1,25 @@
 <html>
-    <h1>signup</h1>
+    <h1>Signup</h1>
+    <h3>Please give your</h3>
+    <form action="/signup" method="get"> <!-- todo: tarvitseeko olla get jotta turvaton -->
+
+        {% csrf_token %} <!-- todo: tulisiko olla ilman tässä -->
+
+        <div style="margin-bottom: 10px;">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <label for="info">Your slogan:</label><br>
+            <input type="text" id="info" name="info"><br><br>
+        </div>    
+        <div style="margin-bottom: 10px;">
+            <label for="password">Password:</label><br>
+            <input type="text" id="password" type="password"><br><br> 
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+
+    <h3> or <a href="/main/">cancel</a></h3>
+    
 </html>
