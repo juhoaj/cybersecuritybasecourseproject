@@ -60,6 +60,9 @@ def sendMessageView(request):
 
 @login_required
 def adminView(request):
+# fix 2: remove commenting below
+# 	if not request.user.is_superuser:
+# 		return redirect("/main")
 	return render(request, 'admin.html')
 
 
