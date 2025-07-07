@@ -1,21 +1,21 @@
 <html>
     <h1>Signup</h1>
     <h3>Please give your</h3>
-    <form action="/signup" method="get"> <!-- todo: tarvitseeko olla get jotta turvaton -->
+    <form action="/signup/" method="post"> 
 
         {% csrf_token %}
 
         <div style="margin-bottom: 10px;">
             <label for="username">Username:</label><br>
             <input type="text" id="username" name="username"><br>
-        </div>
+        </div> 
         <div style="margin-bottom: 10px;">
-            <label for="info">Your slogan:</label><br>
-            <input type="text" id="info" name="info"><br><br>
-        </div>    
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br>
+        </div> 
         <div style="margin-bottom: 10px;">
             <label for="password">Password:</label><br>
-            <input type="text" id="password" type="password"><br><br> 
+            <input type="password" id="password" name="password"><br><br> 
         </div>
         <input type="submit" value="Submit">
     </form>

@@ -24,5 +24,6 @@ urlpatterns = [
     path('main/', mainView, name='main'),
     path('sendmessage/', sendMessageView, name='sendmessage'),
     path('admin/', adminView, name='admin'),
+    path('logout/', logoutView, name='logout'),
     path('obscureurlfordjangoadmin/', admin.site.urls),
 ]
