@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from .models import *
+import sqlite3
 
 
 def loginView(request):
@@ -50,7 +52,29 @@ def signupView(request):
 
 @login_required
 def mainView(request):
-	return render(request, 'main.html')
+
+# Fix 1 part 3 and fix 2: remove commenting from here..
+#	if request.method == 'get':
+#		Message.objects.create(user=request.user, content=request.POST['content'])
+#		return redirect("/main/")
+#
+# .. to here and comment or delete from here
+
+	content = request.GET.get('content')
+	conn = sqlite3.connect('db.sqlite3')
+	cursor = conn.cursor()
+	query = f"""
+	INSERT INTO csbcp_message (user_id,content)
+	VALUES ({request.user.id}, '{content}');
+	"""
+	cursor.executescript(query)
+	conn.commit()
+	conn.close()
+
+# to here
+
+	messages = Message.objects.all()
+	return render(request, 'main.html', {'messages': messages})
 
 
 @login_required
@@ -60,7 +84,7 @@ def sendMessageView(request):
 
 @login_required
 def adminView(request):
-# fix 2: remove commenting below
+# fix 3: remove commenting below
 # 	if not request.user.is_superuser:
 # 		return redirect("/main")
 	return render(request, 'admin.html')
