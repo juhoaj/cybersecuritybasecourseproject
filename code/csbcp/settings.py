@@ -116,3 +116,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/'
+
+SESSION_ENGINE = 'csbcp.userSession' # fix 3: remove or comment this line

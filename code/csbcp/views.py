@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 from .models import *
+from csbcp.threadVariable import *
 import sqlite3
 
 
@@ -13,15 +13,16 @@ def loginView(request):
 
 		if not username or not password:
 			return redirect("/")
-		
+
 		user = authenticate(request, username=username, password=password)
 
 		if user is not None:
+			setUser_id(user.id)
 			login(request, user)
 			return redirect("/main")
 		else:
 			return redirect("/")
-
+		
 	return render(request, 'login.html')
 
 
@@ -32,14 +33,9 @@ def signupView(request):
 		password = request.POST["password"]
 
 		if not username or not password or not email:
-			print('empty')
-			print(username)
-			print(email)
-			print(password)
 			return redirect("/signup")
 			
 		if User.objects.filter(username=username).exists():
-			print('exists')
 			return redirect("/signup")
 	
 		user = User.objects.create_user(username=username, email=email, password=password)
