@@ -8,11 +8,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-with open(BASE_DIR / 'secrets.json') as f:
-    secrets = json.load(f)
+SECRET_KEY = 'django-insecure-$^daqj3ap6=53^o6@tb_sjkdx-z!1b%gs5*gso)-rbo)5u)1(t' # fix 4.1.1 part 1: remove this line completely
 
-SECRET_KEY = secrets['SECRET_KEY']
+# fix 4.1.1 part 2: remove commenting below
+#
+# BASE_DIR = Path(__file__).resolve().parent.parent
+# with open(BASE_DIR / 'secrets.json') as f:
+#     secrets = json.load(f)
+# 
+# SECRET_KEY = secrets['SECRET_KEY']
 
 DEBUG = True #fix 4.2: Change True to False
 
