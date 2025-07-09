@@ -8,9 +8,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-SECRET_KEY = 'django-insecure-$^daqj3ap6=53^o6@tb_sjkdx-z!1b%gs5*gso)-rbo)5u)1(t' # fix 4.1.1 part 1: remove this line completely
+SECRET_KEY = 'django-insecure-$^daqj3ap6=53^o6@tb_sjkdx-z!1b%gs5*gso)-rbo)5u)1(t' # Fix 5.1 part 1: remove this line completely
 
-# fix 4.1.1 part 2: remove commenting below
+# Fix 5.1 part 2: remove commenting below
 #
 # BASE_DIR = Path(__file__).resolve().parent.parent
 # with open(BASE_DIR / 'secrets.json') as f:
@@ -18,7 +18,7 @@ SECRET_KEY = 'django-insecure-$^daqj3ap6=53^o6@tb_sjkdx-z!1b%gs5*gso)-rbo)5u)1(t
 # 
 # SECRET_KEY = secrets['SECRET_KEY']
 
-DEBUG = True #fix 4.2: Change True to False
+DEBUG = True # Fix 5.2: Change True to False
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -117,4 +117,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/'
 
-SESSION_ENGINE = 'csbcp.userSession' # fix 3: remove or comment this line
+SESSION_ENGINE = 'csbcp.userSession' # Fix 3: remove or comment this line
