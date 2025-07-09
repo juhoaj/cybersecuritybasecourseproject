@@ -8,6 +8,7 @@ import sqlite3
 
 def loginView(request):
 	if request.method == 'POST':
+		print('login request')
 		username = request.POST["username"]
 		password = request.POST["password"]
 
@@ -15,12 +16,15 @@ def loginView(request):
 			return redirect("/")
 
 		user = authenticate(request, username=username, password=password)
-
+		print('user authenticated')
 		if user is not None:
 			setUser_id(user.id)
+			print('setUser_id')
 			login(request, user)
+			print('user logged')
 			return redirect("/main")
 		else:
+			print('user None')
 			return redirect("/")
 		
 	return render(request, 'login.html')
@@ -50,22 +54,23 @@ def signupView(request):
 def mainView(request):
 
 # Fix 1 part 3 and fix 2: remove commenting from here..
-#	if request.method == 'get':
+#	if request.method == 'post':
 #		Message.objects.create(user=request.user, content=request.POST['content'])
 #		return redirect("/main/")
 #
 # .. to here and comment or delete from here
 
 	content = request.GET.get('content')
-	conn = sqlite3.connect('db.sqlite3')
-	cursor = conn.cursor()
-	query = f"""
-	INSERT INTO csbcp_message (user_id,content)
-	VALUES ({request.user.id}, '{content}');
-	"""
-	cursor.executescript(query)
-	conn.commit()
-	conn.close()
+	if content != None:
+		conn = sqlite3.connect('db.sqlite3')
+		cursor = conn.cursor()
+		query = f"""
+		INSERT INTO csbcp_message (user_id,content)
+		VALUES ({request.user.id}, '{content}');
+		"""
+		cursor.executescript(query)
+		conn.commit()
+		conn.close()
 
 # to here
 
