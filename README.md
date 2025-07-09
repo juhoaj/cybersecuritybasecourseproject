@@ -1,4 +1,4 @@
-## Course project for Cyber Security Base course 2025
+## Course project for Cyber Security Base 2025
 
 Installation instructions:
 1) Clone or download the reposity and move to `cmdb` directory 
