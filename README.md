@@ -9,7 +9,9 @@ Installation instructions:
 
 
 ## FLAW 1: CSRF
-https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/templates/main.html
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/templates/main.html#L17
+
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/templates/main.html#L19
 
 App’s html template `main.html` is using `get` instead of `post` and missing Django CSRF tag `{% csrf_token %}` which makes the application vulnerable to CSRF (Cross-Site Request Forgery) attacks. If a form is not protected from CSRF attack, an malicious website can execute javascript on victims browser. The malicious code can inpersonate as the victim on other site while utilizing victim’s session and send a form that has not been protected from CSRF attack. 
  
@@ -26,7 +28,9 @@ Django has a built in protection against CSRF attacks for forms. Set  `{% csrf_t
 
 
 ## FLAW 2: A1:2017-Injection
-https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/views.py
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/views.py#L56
+
+
 
 Django ORM (and most of sqlite sql operations) sanitate sql inputs automatically. One way to handle form unsecurely when using sqlite, is to use sqlite’s `executescript`
 raw sql operation with f-string. When used, the application is vulbnerable to injections, including sql injection, in which the attacker can directly write to the database for example from a form. On the main view, you can make sql injection in the message form, for example with `hi'); INSERT INTO csbcp_message (user_id, content) VALUES (1, 'Injected message.'); --`
@@ -59,7 +63,7 @@ It can also be argued, that the login and signup implementations are insecure. F
 
 
 ## FLAW 4: A5:2017-Broken Access Control
-https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/views.py
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/views.py#89
 
 The admin view is hidden from navigation if the user is not an admin. However user can access it from url `admin/` to see admin view content.
 
@@ -73,10 +77,15 @@ Naive fix for the issue is to redirect non-admin users to another page and not r
 
 
 ## FLAW 5: A6:2017-Security Misconfiguration
-https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py#L11
+
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py#L13
+
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py#L21
+
 https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/.gitignore#L213
 
-There are two key misconfigurations:
+### There are two key misconfigurations:
 
 **5.1** The first one is that `SECRET_KEY`  is visible on row 11 of `settings.py` . Secrets should never be set on files that are not in `.gitignore`. Otherwise secrets can be pushed to reposity and this creates a new attack vector for leaking secrets, even in the case that the reposity is not public.  
 
@@ -95,7 +104,7 @@ In a real life situation it would be necessary to remove `secrets.json` from rep
 This is fixed by either deploying the project or changing settings manually. For review purposes, please do this manually and change `True` to `False` on line 21 of `settings.py.`
 
 ### screenshot before: 
-![flaw-5.2-before-1.png ](/screenshots/flaw-5.2-before-1.png )
+![flaw-5.2-before-1.png ](/screenshots/flaw-5.2-before-1.png)
 
 ![flaw-5.2-before-2.png](/screenshots/flaw-5.2-before-2.png)
 
