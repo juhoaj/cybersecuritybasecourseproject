@@ -18,9 +18,7 @@ You can test this by starting a Django web server on `/csrf html` folder with `p
 Django has a built in protection against CSRF attacks for forms. Set  `{% csrf_token %}` tag on all forms and make sure that middleware `django.middleware.csrf.CsrfViewMiddleware`
  is included in `MIDDLEWARE` list on  `settings.py`. To fix the vulnerability remove commenting from line 19 of `main.html` and change form method from `get` to `post`  on row 17. You also need to modify views.py, for simplicity this is included in the fix for flaw 2 to keep fixes as simple as possible. 
 
-### Screenshots before: 
-![flaw-1-before-1.png](/screenshots/flaw-1-before-1.png)
-
+### Screenshot before: 
 ![flaw-1-before-2.png](/screenshots/flaw-1-before-2.png)
 
 ### Screenshot after: 
@@ -35,7 +33,9 @@ raw sql operation with f-string. When used, the application is vulbnerable to in
 
 To fix implementation issues you need to remove the unhealthy raw sql operation from rows 61 - 75 and to remove commenting from rows 56 -60 on `views.py`  to enable code that utilizes Django ORM.
 
-### Screenshot before: 
+### Screenshos before: 
+![flaw-2-before-1.png](/screenshots/flaw-2-before-1.png)
+
 ![flaw-2-before-2.png](/screenshots/flaw-2-before-2.png)
 
 ### Screenshot after: 
