@@ -54,7 +54,7 @@ def signupView(request):
 def mainView(request):
 
 # Fix 1 part 3 and fix 2: remove commenting from here..
-#	if request.method == 'post':
+#	if request.method == 'POST':
 #		Message.objects.create(user=request.user, content=request.POST['content'])
 #		return redirect("/main/")
 #
