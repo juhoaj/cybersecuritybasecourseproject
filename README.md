@@ -15,10 +15,10 @@ https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/te
 
 App’s html template `main.html` is using `get` instead of `post` and missing Django CSRF tag `{% csrf_token %}` which makes the application vulnerable to CSRF (Cross-Site Request Forgery) attacks. If a form is not protected from CSRF attack, an malicious website can execute javascript on victims browser. The malicious code can inpersonate as the victim on other site while utilizing victim’s session and send a form that has not been protected from CSRF attack. 
  
-You can test this by starting a Django web server on `/csrf html` folder with `python3 -m http.server 9000` and starting web browser on http://localhost:9000/csrf.html . As the implementetion required for flaw 3 is not according to best practices, it is best to start course project server first.
+You can test this by starting a Django web server on `/csrf html` folder with `python3 -m http.server 9000` and starting web browser on http://localhost:9000/csrf.html . As the implementetion required for flaw 3 does not follow best practices, it is best to start course project server & log in first.
 
 Django has a built in protection against CSRF attacks for forms. Set  `{% csrf_token %}` tag on all forms and make sure that middleware `django.middleware.csrf.CsrfViewMiddleware`
- is included in `MIDDLEWARE` list on  `settings.py`. To fix the vulnerability remove commenting from line 19 of `main.html` and change form method from `get` to `post`  on row 17. You also need to modify views.py, for simplicity this is included in the fix for flaw 2 to keep fixes as simple as possible. 
+ is included in `MIDDLEWARE` list on  `settings.py`. To fix the vulnerability remove commenting from line 19 of `main.html` and change form method from `get` to `post`  on row 17. You also need to modify views.py, for simplicity this is included in the fix for flaw 2 to keep fix implementation as simple as possible. 
 
 ### Screenshot before: 
 ![flaw-1-before-2.png](/screenshots/flaw-1-before-2.png)
@@ -28,7 +28,7 @@ Django has a built in protection against CSRF attacks for forms. Set  `{% csrf_t
 
 
 ## FLAW 2: A1:2017-Injection
-https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/views.py#L56
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/views.py#L61-L75
 
 
 
@@ -49,9 +49,9 @@ To fix implementation issues you need to remove the unhealthy raw sql operation 
 ## FLAW 3: A2:2017-Broken Authentication
 https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py#L120
 
-The application uses a custom session engine that sets the session id to be `session-<user id>`. (The implementation using thread local data is not a recommended pattern for production use either.) This vulnerability makes authentication very unsecure as attacker can easily go through possible session ids, starting from attacker’s id and proceeding to one.
+The application uses a custom session engine that sets the session id to be `session-<user id>`. (The implementation using thread local data is not a recommended pattern for production use either.) This vulnerability makes authentication very unsecure as the attacker can easily go through possible session ids, for example starting from attacker’s own id and iterating it down to one.
 
-Removing `SESSION_ENGINE` setting from line 120 of `settings.py` fixes the vulnerability as it returns Django to use default session engine that handles session id more securely. Also `views.py` would benefit from refactoring by removing the useless import and call for `setUser_id()`  and that the now useless `threadVariable.py` & `userSession.py` could be deleted. 
+Removing `SESSION_ENGINE` setting from line 120 of `settings.py` fixes the vulnerability as it returns Django to use default session engine that handles session id more securely. Also `views.py` would benefit from refactoring by removing the useless import and call for `setUser_id()`  and removing the now useless `threadVariable.py` & `userSession.py` . 
 
 ### Screenshot before: 
 ![flaw-3-before-1.png](/screenshots/flaw-3-before-1.png)
@@ -59,11 +59,11 @@ Removing `SESSION_ENGINE` setting from line 120 of `settings.py` fixes the vulne
 ### Screenshot after: 
 ![flaw-3-after-1.png](/screenshots/flaw-3-after-1.png)
 
-It can also be argued, that the login and signup implementations are insecure. For example signup does not enforce safe password use. Best practice is to use Django default functionalities if you are not very experienced in creating custom login.
+It can also be argued, that the login and signup implementations are insecure. For example signup does not enforce safe password use. Best practice is to use Django default functionalities if you are not very experienced in creating your own.
 
 
 ## FLAW 4: A5:2017-Broken Access Control
-https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/views.py#89
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/views.py#L89-L90
 
 The admin view is hidden from navigation if the user is not an admin. However user can access it from url `admin/` to see admin view content.
 
@@ -79,9 +79,7 @@ Naive fix for the issue is to redirect non-admin users to another page and not r
 ## FLAW 5: A6:2017-Security Misconfiguration
 https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py#L11
 
-https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py#L13
-
-https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py#L21
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py#L15-L17
 
 https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/.gitignore#L213
 
@@ -98,6 +96,8 @@ In a real life situation it would be necessary to remove `secrets.json` from rep
 
 ### screenshot after: 
 ![flaw-5.1-after-1.png](/screenshots/flaw-5.1-after-1.png)
+
+https://github.com/juhoaj/cybersecuritybasecourseproject/blob/main/code/csbcp/settings.py#L21
 
 **5.2** Second misconfiguration is on row 21 of `settings.py`. Debug state is left on with `DEBUG = True`. This allows the user to gain insightful information on app’s inner working in the case of errors. It is extremelty useful when exploiting other vulnerabilities. For example making a sql injection (FLAW 1: A1:2017-Injection) becomes much easier as the attacker gets helpful error messages if the attack is not successfull.
 
