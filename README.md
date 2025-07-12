@@ -4,7 +4,7 @@ Installation instructions:
 1) Clone or download the reposity and change to `cmdb` directory 
 2) It should not be necessary to run `pip install -r requirements.txt` if you have attended the course
 3) Run `python manage.py makemigrations csbcp` and  `python manage.py migrate` to create database
-4) Create admin with `python manage.py createsuperuser` if you want to validate FLAW 4: A5:2017-Broken Access Control 
+4) Create admin with `python manage.py createsuperuser` 
 5) Start the server with `python manage.py runserver`
 
 
